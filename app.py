@@ -3,6 +3,7 @@ from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
 import openai
 from llama_index import SimpleDirectoryReader
+import os
 
 """
 # Welcome to Alpha Test Coaching Bot
@@ -14,12 +15,18 @@ Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 #with st.sidebar:
 #    openai_api_key = st.text_input('OpenAI API Key', key="chatbot_api_key", type="password")
 
-if prompt := st.chat_input():
-    if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
+#if prompt := st.chat_input():
+#    if not openai_api_key:
+#        st.info("Please add your OpenAI API key to continue.")
+#        st.stop()
+#
+#    openai.api_key = openai_api_key
 
-    openai.api_key = openai_api_key
+
+openai_api_key = os.getenv('OPENAI_API_KEY')
+if not openai_api_key:
+    print("Please set the OPENAI_API_KEY environment variable.")
+    exit(1)
 
 @st.cache_resource(show_spinner=False)
 def load_data():
