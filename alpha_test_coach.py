@@ -7,6 +7,7 @@ from llama_index import SimpleDirectoryReader
 """
 # Welcome to Alpha Test Coaching Bot
 This GPT-powered chatbot can retrieve test questions and converse with the students to review their mistakes in the test.
+Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
 #st.title('Alpha Test Coach')
 #st.header("")
