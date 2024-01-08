@@ -1,0 +1,3 @@
+#List of Test Knowledge
+#Reading STAAR G5 2017 (https://tea.texas.gov/student-assessment/testing/staar/staar-released-test/staarg5-2017-test-read-f.pdf)
+#Reading STAAR G5 2017 Key (https://tea.texas.gov/system/files/2017_STAAR_Gr5Read_Key_Paper_tagged.pdf)
