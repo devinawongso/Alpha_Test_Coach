@@ -11,8 +11,15 @@ Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
 #st.title('Alpha Test Coach')
 #st.header("")
+#with st.sidebar:
+#    openai_api_key = st.text_input('OpenAI API Key', key="chatbot_api_key", type="password")
 
-openai_api_key = st.sidebar.text_input('OpenAI API Key')
+if prompt := st.chat_input():
+    if not openai_api_key:
+        st.info("Please add your OpenAI API key to continue.")
+        st.stop()
+
+    openai.api_key = openai_api_key
 
 @st.cache_resource(show_spinner=False)
 def load_data():
