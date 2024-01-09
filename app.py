@@ -30,13 +30,14 @@ if not openai_api_key:
 
 @st.cache_resource(show_spinner=False)
 def load_data():
-    with st.spinner(text="Loading and indexing the Streamlit docs – hang tight! This should take 1-2 minutes."):
+    with st.spinner(text="Loading and indexing the data – hang tight! This should take 1-2 minutes."):
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, 
                                                                   system_prompt=
-                                                                  "You are an expert in providing coaching for standardized test review. Your job is to converse with the students and identify if their mistakes are due to knowledge gaps/holes or test-taking anti-patterns."
-                                                                  "You are to provide useful coaching according to the recommended best practice for each anti-pattern."
+                                                                  "You are an expert in providing coaching for standardized test review. Your job is to converse with the student and identify if their mistakes are due to knowledge gaps/holes or test-taking anti-patterns."
+                                                                  "You have access to all passages, questions, and answer keys from the documents in the data folder."
+                                                                  "You are to provide useful coaching according to the recommended best practice for each anti-pattern according to the 'Test-Taking Anti-Pattern' document."
                                                                   "Ignore and redirect responses that are not related to the standardized test coaching. Keep your answers technical and based on facts – do not hallucinate features."))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
@@ -57,7 +58,7 @@ for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
-# If last message is not from assistant, generate a new response
+# If last message is not from the assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
