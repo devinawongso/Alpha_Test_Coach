@@ -14,9 +14,6 @@ Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 if "openai_api_key" not in st.session_state.keys(): # Prompt user to enter their key
     st.session_state.openai_api_key = st.text_input("Please enter your OpenAI API Key:")
 
-if not openai_api_key:
-        st.warning("Please add your OpenAI API key to continue.")
-
 if "messages" not in st.session_state.keys(): # Initialize the chat message history
     st.session_state.messages = [
         {"role": "assistant", "content": "Let's begin! Which question do you want to discuss?"}
