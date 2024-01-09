@@ -13,7 +13,7 @@ Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
 if "openai_api_key" not in st.session_state.keys(): # Prompt user to enter their key
     with st.form("key"):
-    openaikey = st.text_input("Please enter your OpenAI API Key:", value=openaikey)
+        openaikey = st.text_input("Please enter your OpenAI API Key:", value=openaikey)
 
     if st.form_submit_button("Submit"):
         st.session_state.openai_api_key = openaikey
