@@ -11,12 +11,12 @@ import os
 This GPT-powered chatbot can retrieve test questions and converse with the students to review their mistakes in the test.
 Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
-if "openai_api_key" not in st.session_state.keys(): # Prompt user to enter their key
+if "openai.api_key" not in st.session_state.keys(): # Prompt user to enter their key
     input = ""
     with st.form("key"):
         input = st.text_input("Please enter your OpenAI API Key:", value=input)
         if st.form_submit_button("Submit"):
-            st.session_state.openai_api_key = input
+            st.session_state.openai.api_key = input
             st.info("Submitted!")
     
 
