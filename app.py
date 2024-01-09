@@ -3,6 +3,7 @@ from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
 import openai
 from llama_index import SimpleDirectoryReader
+from dotenv import load_dotenv
 import os
 
 """
@@ -10,6 +11,27 @@ import os
 This GPT-powered chatbot can retrieve test questions and converse with the students to review their mistakes in the test.
 Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
+
+load_dotenv()
+
+def sidebar():
+    with st.sidebar:
+        st.markdown(
+            "## How to use\n"
+            "1. Enter your [OpenAI API key](https://platform.openai.com/account/api-keys) below🔑\n"  # noqa: E501
+            "2. Converse with the bot to review your mistakes\n"
+        )
+        api_key_input = st.text_input(
+            "OpenAI API Key",
+            type="password",
+            placeholder="Paste your OpenAI API key here (sk-...)",
+            help="You can get your API key from https://platform.openai.com/account/api-keys.",  # noqa: E501
+            value=os.environ.get("OPENAI_API_KEY", None)
+            or st.session_state.get("OPENAI_API_KEY", ""),
+        )
+
+        st.session_state["OPENAI_API_KEY"] = api_key_input
+
 sidebar()
 openai_api_key = st.session_state.get("OPENAI_API_KEY")
 if not openai_api_key:
