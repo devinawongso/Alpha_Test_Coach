@@ -10,23 +10,18 @@ import os
 This GPT-powered chatbot can retrieve test questions and converse with the students to review their mistakes in the test.
 Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
-#st.title('Alpha Test Coach')
-#st.header("")
-#with st.sidebar:
-#    openai_api_key = st.text_input('OpenAI API Key', key="chatbot_api_key", type="password")
-
-#if prompt := st.chat_input():
-#    if not openai_api_key:
-#        st.info("Please add your OpenAI API key to continue.")
-#        st.stop()
-#
-#    openai.api_key = openai_api_key
-
-
-openai_api_key = os.getenv('OPENAI_API_KEY')
+sidebar()
+openai_api_key = st.session_state.get("OPENAI_API_KEY")
 if not openai_api_key:
-    print("Please set the OPENAI_API_KEY environment variable.")
-    exit(1)
+    st.warning(
+        "Enter your OpenAI API key in the sidebar. You can get a key at"
+        " https://platform.openai.com/account/api-keys."
+    )
+    
+if "messages" not in st.session_state.keys(): # Initialize the chat message history
+    st.session_state.messages = [
+        {"role": "assistant", "content": "Let's begin! Which question do you want to discuss?"}
+    ]
 
 @st.cache_resource(show_spinner=False)
 def load_data():
@@ -44,12 +39,8 @@ def load_data():
 
 index = load_data()
 
-if "messages" not in st.session_state.keys(): # Initialize the chat message history
-    st.session_state.messages = [
-        {"role": "assistant", "content": "Let's begin! Which question do you want to discuss? What was your answer for that?"}
-    ]
-  
-chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
+if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
+    st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
 
 if prompt := st.chat_input("Question Number:"): # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
