@@ -12,6 +12,7 @@ This GPT-powered chatbot can retrieve test questions and converse with the stude
 Demo Version: Currently only support Alpha ELA STAAR G5.2017 test
 """
 if "openai_api_key" not in st.session_state.keys(): # Prompt user to enter their key
+    st.stop
     st.session_state.openai_api_key = st.text_input("Please enter your OpenAI API Key:")
 
 st.write('Received the key!')
